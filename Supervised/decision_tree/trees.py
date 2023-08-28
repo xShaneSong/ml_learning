@@ -95,13 +95,46 @@ def createTree(dataSet, labels):
             splitDataSet(dataSet, bestFeat, value), subLabels)
     return myTree
 
+# 决策树的分类
+def classify(inputTree, featLabels, testVec):
+    firstStr = list(inputTree.keys())[0]
+    print('firstStr=', firstStr)
+    secondDict = inputTree[firstStr]
+    featIndex = featLabels.index(firstStr)
+    for key in secondDict.keys():
+        if testVec[featIndex] == key:
+            if type(secondDict[key]).__name__ == 'dict':
+                classLabel = classify(secondDict[key], featLabels, testVec)
+            else: classLabel = secondDict[key]
+    return classLabel
+
+# 存储树
+def storeTree(inputTree, filename):
+    import pickle
+    fw = open(filename, 'w')
+    pickle.dump(inputTree)
+    fw.close()
+
+# 取得树
+def grabTree(filename):
+    import pickle
+    fw = open(filename)
+    return pickle.load(fr)
+
 if __name__ == "__main__":
-    # myDat, labels = createDataSet()
-    # myTree = createTree(myDat, labels)
-    # print(myTree)
-    fr = open('lenses.txt')
-    lenses = [inst.strip().split('\t') for inst in fr.readlines()]
-    lensesLabels = ['age', 'prescript', 'astigmatic', 'tearRate']
-    lensesTree = createTree(lenses, lensesLabels)
-    print(lensesTree)
+    myDat, labels = createDataSet()
+    myTree = createTree(myDat, labels)
+    print("-------------------")
+    print(myTree)
+    print(labels)
+    print("======================")
+    # print(classify(myTree, labels, [1,0]))
+    treePlotter.createPlot(myTree)
+
+    # fr = open('lenses.txt')
+    # lenses = [inst.strip().split('\t') for inst in fr.readlines()]
+    # lensesLabels = ['age', 'prescript', 'astigmatic', 'tearRate']
+    # lensesTree = createTree(lenses, lensesLabels)
+    # print(lensesTree)
     #treePlotter.createPlot(lensesTree)
+    # print(classify(lensesTree, lensesLabels, [1,0]))
