@@ -1,5 +1,6 @@
 from math import log
 import operator
+import treePlotter
 
 # 计算给定数据集的香农熵
 def calcShannonEnt(dataSet):
@@ -94,8 +95,13 @@ def createTree(dataSet, labels):
             splitDataSet(dataSet, bestFeat, value), subLabels)
     return myTree
 
-
 if __name__ == "__main__":
-    myDat, labels = createDataSet()
-    myTree = createTree(myDat, labels)
-    print(myTree)
+    # myDat, labels = createDataSet()
+    # myTree = createTree(myDat, labels)
+    # print(myTree)
+    fr = open('lenses.txt')
+    lenses=[inst.strip().split('\t') for inst in fr.readlines()]
+    lensesLabels=['age', 'prescript', 'astigmatic', 'tearRate']
+    lensesTree=createTree(lenses, lensesLabels)
+    print(lensesTree)
+    #treePlotter.createPlot(lensesTree)
