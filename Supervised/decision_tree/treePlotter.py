@@ -54,11 +54,11 @@ def plotTree(myTree, parentPt, nodeTxt):
     firstStr = list(myTree.keys())[0]
     cntrPt = (plotTree.xOff + (1.0 + float(numLeafs)) / 2.0 / plotTree.totalW, plotTree.yOff)
     plotMidText(cntrPt, parentPt, nodeTxt)
-    plotNode(firstStr, parentPt, decisionNode)
+    plotNode(firstStr, cntrPt, parentPt, decisionNode)
     secondDict = myTree[firstStr]
     plotTree.yOff = plotTree.yOff - 1.0 / plotTree.totalD
     for key in secondDict.keys():
-        if type(secondDict[key].__name__ == 'dict'):
+        if type(secondDict[key]).__name__ == 'dict':
             plotTree(secondDict[key], cntrPt, str(key))
         else:
             plotTree.xOff = plotTree.xOff + 1.0 / plotTree.totalW
@@ -68,7 +68,7 @@ def plotTree(myTree, parentPt, nodeTxt):
 
 def createPlot(inTree):
     fig = plt.figure(1, facecolor = 'white')
-    fig.clt()
+    fig.clf()
     axprops = dict(xticks = [], yticks = [])
     createPlot.ax1 = plt.subplot(111, frameon = False, **axprops)
     plotTree.totalW = float(getNumLeafs(inTree))
