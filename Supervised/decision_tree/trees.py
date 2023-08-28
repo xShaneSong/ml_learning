@@ -100,8 +100,8 @@ if __name__ == "__main__":
     # myTree = createTree(myDat, labels)
     # print(myTree)
     fr = open('lenses.txt')
-    lenses=[inst.strip().split('\t') for inst in fr.readlines()]
-    lensesLabels=['age', 'prescript', 'astigmatic', 'tearRate']
-    lensesTree=createTree(lenses, lensesLabels)
+    lenses = [inst.strip().split('\t') for inst in fr.readlines()]
+    lensesLabels = ['age', 'prescript', 'astigmatic', 'tearRate']
+    lensesTree = createTree(lenses, lensesLabels)
     print(lensesTree)
     #treePlotter.createPlot(lensesTree)
