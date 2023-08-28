@@ -122,19 +122,14 @@ def grabTree(filename):
     return pickle.load(fr)
 
 if __name__ == "__main__":
-    myDat, labels = createDataSet()
-    myTree = createTree(myDat, labels)
-    print("-------------------")
-    print(myTree)
-    print(labels)
-    print("======================")
+    # myDat, labels = createDataSet()
+    # myTree = createTree(myDat, labels.copy())
     # print(classify(myTree, labels, [1,0]))
-    treePlotter.createPlot(myTree)
+    #treePlotter.createPlot(myTree)
 
-    # fr = open('lenses.txt')
-    # lenses = [inst.strip().split('\t') for inst in fr.readlines()]
-    # lensesLabels = ['age', 'prescript', 'astigmatic', 'tearRate']
-    # lensesTree = createTree(lenses, lensesLabels)
-    # print(lensesTree)
-    #treePlotter.createPlot(lensesTree)
-    # print(classify(lensesTree, lensesLabels, [1,0]))
+    fr = open('lenses.txt')
+    lenses = [inst.strip().split('\t') for inst in fr.readlines()]
+    lensesLabels = ['age', 'prescript', 'astigmatic', 'tearRate']
+    lensesTree = createTree(lenses, lensesLabels.copy())
+    print(classify(lensesTree, lensesLabels, ['presbyopic', 'hyper', 'yes', 'normal']))
+    # treePlotter.createPlot(lensesTree)
