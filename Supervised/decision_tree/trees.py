@@ -1,6 +1,7 @@
 from math import log
 import operator
 import treePlotter
+import pickle
 
 # 计算给定数据集的香农熵
 def calcShannonEnt(dataSet):
@@ -98,7 +99,6 @@ def createTree(dataSet, labels):
 # 决策树的分类
 def classify(inputTree, featLabels, testVec):
     firstStr = list(inputTree.keys())[0]
-    print('firstStr=', firstStr)
     secondDict = inputTree[firstStr]
     featIndex = featLabels.index(firstStr)
     for key in secondDict.keys():
@@ -110,16 +110,13 @@ def classify(inputTree, featLabels, testVec):
 
 # 存储树
 def storeTree(inputTree, filename):
-    import pickle
-    fw = open(filename, 'w')
-    pickle.dump(inputTree)
-    fw.close()
+    with open(filename, 'wb+') as fw:
+        pickle.dump(inputTree, fw)
 
 # 取得树
 def grabTree(filename):
-    import pickle
-    fw = open(filename)
-    return pickle.load(fr)
+    with open(filename, 'rb') as fr:
+        return pickle.load(fr)
 
 if __name__ == "__main__":
     # myDat, labels = createDataSet()
@@ -127,9 +124,12 @@ if __name__ == "__main__":
     # print(classify(myTree, labels, [1,0]))
     #treePlotter.createPlot(myTree)
 
+    # create tree
     fr = open('lenses.txt')
     lenses = [inst.strip().split('\t') for inst in fr.readlines()]
     lensesLabels = ['age', 'prescript', 'astigmatic', 'tearRate']
     lensesTree = createTree(lenses, lensesLabels.copy())
-    print(classify(lensesTree, lensesLabels, ['presbyopic', 'hyper', 'yes', 'normal']))
+    storeTree(lensesTree, './lenses_tree')
+    ltree = grabTree('./lenses_tree')
+    print(classify(ltree, lensesLabels, ['presbyopic', 'hyper', 'yes', 'normal']))
     # treePlotter.createPlot(lensesTree)
