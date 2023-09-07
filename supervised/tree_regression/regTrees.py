@@ -69,8 +69,11 @@ def createTree(dataSet, leafType = regLeaf, errType = regErr, ops = (1, 4)):
     return retTree
 
 if __name__ == "__main__":
-    testMat = mat(eye(4))
-    print(testMat)
-    mat0, mat1 = binSplitDataSet(testMat, 1, 0.5)
-    print(mat0)
-    print(mat1)
+    # testMat = mat(eye(4))
+    # print(testMat)
+    # mat0, mat1 = binSplitDataSet(testMat, 1, 0.5)
+    # print(mat0)
+    # print(mat1)
+    myDat = loadDataSet('ex00.txt')
+    myMat = mat(myDat)
+    print(createTree(myDat))
